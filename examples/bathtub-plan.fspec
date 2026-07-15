@@ -1,0 +1,24 @@
+spec bathtubPlan;
+
+def water = stock{
+    level: 40,
+};
+
+def tap = flow{
+    reservoir: new water,
+    fill: func{
+        reservoir.level <- 10;
+    },
+    drain: func{
+        reservoir.level -> 10;
+    },
+};
+
+assume demo.reservoir.level == 60 eventually;
+
+run init{
+    demo = new tap;
+}{
+    __;
+    __;
+};

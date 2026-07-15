@@ -1,0 +1,28 @@
+spec commandSequence55ThreeSlots;
+
+def spacecraft = stock{
+    soc: 40,
+    images: 0,
+};
+
+def operations = flow{
+    state: new spacecraft,
+    charge: func{
+        state.soc <- 20;
+    },
+    observe: func{
+        state.soc -> 55;
+        state.images <- 1;
+    },
+};
+
+assume sat.state.images >= 1 eventually;
+assume sat.state.soc >= 10;
+
+run init{
+    sat = new operations;
+}{
+    __;
+    __;
+    __;
+};

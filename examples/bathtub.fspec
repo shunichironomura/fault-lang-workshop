@@ -1,0 +1,23 @@
+spec bathtub;
+
+def water = stock{
+    level: 10,
+    inflow: unknown(),
+};
+
+def tap = flow{
+    reservoir: new water,
+    fill: func{
+        reservoir.level <- reservoir.inflow;
+    },
+};
+
+assume demo.reservoir.inflow >= 0;
+assume demo.reservoir.inflow <= 3;
+assert demo.reservoir.level <= 12;
+
+run init{
+    demo = new tap;
+}{
+    demo.fill;
+};

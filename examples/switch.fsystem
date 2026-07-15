@@ -1,0 +1,14 @@
+system switch;
+
+component light = states{
+    off: func{
+        choose advance(this.on) || stay();
+    },
+    on: func{
+        stay();
+    },
+};
+
+run {
+    light.off;
+};

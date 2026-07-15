@@ -1,0 +1,23 @@
+spec satellitePower;
+
+def battery = stock{
+    soc: 60,
+    eclipseDraw: unknown(),
+};
+
+def orbit = flow{
+    power: new battery,
+    eclipse: func{
+        power.soc -> power.eclipseDraw;
+    },
+};
+
+assume sat.power.eclipseDraw >= 0;
+assume sat.power.eclipseDraw <= 50;
+assert sat.power.soc >= 20;
+
+run init{
+    sat = new orbit;
+}{
+    sat.eclipse;
+};
