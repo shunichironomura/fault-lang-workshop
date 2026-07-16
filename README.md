@@ -35,8 +35,9 @@ FAULT_VERSION=v1.0.0 ./install.sh
 | --- | --- |
 | `examples/bathtub.fspec` | failure witnessを探す最小モデル |
 | `examples/bathtub-plan.fspec` | synthesis slotを使った操作列の合成 |
-| `examples/switch.fsystem` | state machineの最小モデル |
-| `examples/satellite-power.fspec` | 人工衛星の電力モデル |
+| `examples/switch.fsystem` | state machine単体の最小モデル |
+| `examples/satellite-power.fspec` | 人工衛星のstock/flowによる電力収支 |
+| `examples/satellite-mission.fsystem` | 電力モデルをimportし、mode遷移からflowを呼ぶモデル |
 | `exercises/command-sequence.fspec` | command sequence合成の小演習 |
 | `solutions/command-sequence-55-two-slots.fspec` | 観測消費55、2 slots |
 | `solutions/command-sequence-55-three-slots.fspec` | 観測消費55、3 slots |
@@ -47,7 +48,8 @@ FAULT_VERSION=v1.0.0 ./install.sh
 fault -f examples/bathtub.fspec
 fault -f examples/bathtub-plan.fspec
 fault -f examples/switch.fsystem
-fault -f examples/satellite-power.fspec
+fault lint -f examples/satellite-power.fspec
+fault -f examples/satellite-mission.fsystem
 fault -f exercises/command-sequence.fspec
 ```
 

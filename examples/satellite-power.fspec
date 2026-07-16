@@ -1,3 +1,4 @@
+// examples/satellite-power.fspec
 spec satellitePower;
 
 def battery = stock{
@@ -10,14 +11,4 @@ def orbit = flow{
     eclipse: func{
         power.soc -> power.eclipseDraw;
     },
-};
-
-assume sat.power.eclipseDraw >= 0;
-assume sat.power.eclipseDraw <= 50;
-assert sat.power.soc >= 20;
-
-run init{
-    sat = new orbit;
-}{
-    sat.eclipse;
 };

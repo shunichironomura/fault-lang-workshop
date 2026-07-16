@@ -1,0 +1,27 @@
+// examples/satellite-mission.fsystem
+system satelliteMission;
+
+import energy "satellite-power.fspec";
+global sat = new energy.orbit;
+
+assume sat.power.eclipseDraw >= 0;
+assume sat.power.eclipseDraw <= 50;
+assert sat.power.soc >= 20;
+
+component mode = states{
+    nominal: func{
+        advance(this.eclipse);
+    },
+    eclipse: func{
+        sat.eclipse;
+        advance(this.safe);
+    },
+    safe: func{
+        stay();
+    },
+};
+
+run {
+    mode.nominal;
+    mode.eclipse;
+};
